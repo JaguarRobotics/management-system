@@ -1,4 +1,4 @@
-#!/bin/bash --login
+#!/bin/bash
 set -e
 
 dev=0
