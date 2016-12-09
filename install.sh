@@ -2,6 +2,7 @@
 set -e
 
 # Install javascript dependencies
+node --version
 npm install
 node node_modules/.bin/typings install
 
