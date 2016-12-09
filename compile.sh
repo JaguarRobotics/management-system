@@ -13,6 +13,7 @@ function prefixOutput() {
 }
 
 # Update the PATH
+source ~/.rvm/scripts/rvm
 rvm use 2.3.0
 PATH=$PATH:node_modules/.bin/:$(bundle show jekyll)/exe/
 
