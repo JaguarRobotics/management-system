@@ -1,0 +1,29 @@
+{
+    "bugs": {
+        "url": "https://github.com/JaguarRobotics/management-system/issues"
+    },
+    "contributors": [
+        {
+            "name": "Zach Deibert",
+            "email": "zachdeibert@gmail.com",
+            "url": "https://github.com/zachdeibert/"
+        }
+    ],
+    "dependencies": {
+        
+    },
+    "description": "A system for FRC teams to manage team members with",
+    "devDependencies": {
+        "typescript": "^2.1.4",
+        "typings": "^2.0.0"
+    },
+    "displayName": "FRC Team Manager",
+    "homepage": "https://team-manage.github.io/",
+    "name": "frcteammanager",
+    "readme": "README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/JaguarRobotics/management-system/"
+    },
+    "version": "1.0.0"
+}
