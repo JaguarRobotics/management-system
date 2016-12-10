@@ -1,0 +1,7 @@
+---
+permalink: /.gitignore
+---
+/node_modules/
+/*.sh
+/deploy.*
+/*.json
