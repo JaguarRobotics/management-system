@@ -5,3 +5,4 @@ permalink: /.gitignore
 /*.sh
 /deploy.*
 /*.json
+/typings/
