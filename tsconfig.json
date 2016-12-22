@@ -5,8 +5,7 @@
         "rootDir": "ts/",
         "sourceMap": true
     },
-    "exclude": [
-        "node_modules",
-        "_site"
+    "files": [
+        "ts/main.ts"
     ]
 }
