@@ -1,1 +1,24 @@
-<h1>Hello, world!</h1>
+<nav ng-controller="header" ng-hide="title == null || title == 'null'" class="indigo darken-4">
+    <div class="nav-wrapper">
+        <a class="brand-logo center" ng-bind="title"></a>
+        <ul class="left">
+            <li>
+                <a ng-click="goBack()">
+                    <i class="material-icons">
+                        arrow_back
+                    </i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container" ng-controller="pages">
+    {% for p in site.data.pages %}
+        <div ng-show="name == '{{ p.name }}'" id="page-{{ p.name }}">
+            <input type="hidden" name="navbarTitle" value="{{ p.navbarTitle }}" />
+            <input type="hidden" name="pageTitle" value="{{ p.pageTitle }}" />
+            <input type="hidden" name="pageUrl" value="{{ p.url }}" />
+            {% include pages/{{ p.file }} %}
+        </div>
+    {% endfor %}
+</div>
