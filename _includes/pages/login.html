@@ -9,25 +9,25 @@
         </div>
         <div class="row">
             <div class="col s12 input-field">
-                <input name="server" type="text" />
+                <input name="server" type="text" ng-model="server" />
                 <label for="server">Server</label>
             </div>
         </div>
         <div class="row">
             <div class="col s12 input-field">
-                <input name="user" type="text" />
+                <input name="user" type="text" ng-model="username" />
                 <label for="user">Username</label>
             </div>
         </div>
         <div class="row">
             <div class="col s12 input-field">
-                <input name="pass" type="password" />
+                <input name="pass" type="password" ng-model="password" />
                 <label for="pass">Password</label>
             </div>
         </div>
         <div class="row">
             <div class="col s6">
-                <button class="waves-effect waves-light btn left">
+                <button class="waves-effect waves-light btn left" ng-click="login()">
                     Log In
                     <i class="material-icons">
                         send
@@ -35,7 +35,7 @@
                 </button>
             </div>
             <div class="col s6">
-                <button class="waves-effect waves-light btn right">
+                <button class="waves-effect waves-light btn right" ng-click="create()">
                     Create Account
                     <i class="material-icons">
                         add
