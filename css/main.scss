@@ -2,4 +2,8 @@
 ---
 @charset "utf-8";
 
-@import "loading", "login";
+@import
+{% for p in site.data.pages %}
+    "pages/{{ p.name }}",
+{% endfor %}
+    "loading";

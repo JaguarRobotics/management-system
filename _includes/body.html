@@ -1,4 +1,4 @@
-<nav ng-controller="header" ng-hide="title == null || title == 'null'" class="indigo darken-4">
+<nav ng-controller="header" ng-hide="title == null || title == ''" class="indigo darken-4">
     <div class="nav-wrapper">
         <a class="brand-logo center" ng-bind="title"></a>
         <ul class="left">
@@ -18,7 +18,7 @@
             <input type="hidden" name="navbarTitle" value="{{ p.navbarTitle }}" />
             <input type="hidden" name="pageTitle" value="{{ p.pageTitle }}" />
             <input type="hidden" name="pageUrl" value="{{ p.url }}" />
-            {% include pages/{{ p.file }} %}
+            {% include pages/{{ p.name }}.html %}
         </div>
     {% endfor %}
 </div>

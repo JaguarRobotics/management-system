@@ -17,18 +17,18 @@ source ~/.rvm/scripts/rvm
 rvm use 2.3.0
 PATH=$PATH:node_modules/.bin/:$(bundle show jekyll)/exe/
 
-# Transpile typescipts
-if [ $dev -eq 1 ]; then
-    tsc -p . --sourceMap -w | prefixOutput "[TypeScript] " &
-else
-    tsc -p . --sourceMap || true
-fi
-
 # Build Jekyll content
 if [ $dev -eq 1 ]; then
     jekyll serve -H 0.0.0.0 | prefixOutput "[Jekyll]     " &
 else
     jekyll build
+fi
+
+# Transpile typescipts
+if [ $dev -eq 1 ]; then
+    tsc -p _site --sourceMap -w | prefixOutput "[TypeScript] " &
+else
+    tsc -p _site --sourceMap || true
 fi
 
 # Run the development server in the background
