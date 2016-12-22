@@ -1,7 +1,11 @@
 /// <reference path="angular.ts" />
+/// <reference path="login.ts" />
+/// <reference path="404.ts" />
 
 namespace org.usd232.robotics.management {
     import AngularController = org.usd232.robotics.management.ng.AngularController;
+    import LoginController = org.usd232.robotics.management.pages.LoginController;
+    import NotFoundController = org.usd232.robotics.management.pages.NotFoundController;
 
     export class NavBar {
         private $scope: any;
@@ -60,6 +64,8 @@ namespace org.usd232.robotics.management {
             let history: HistoryController = new HistoryController();
             let nav: NavBar = new NavBar(history);
             let page: PageController = new PageController(nav);
+            new LoginController("login");
+            new NotFoundController("404");
         }
     }
 }

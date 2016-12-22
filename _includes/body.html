@@ -14,7 +14,7 @@
 </nav>
 <div class="container" ng-controller="pages">
     {% for p in site.data.pages %}
-        <div ng-show="name == '{{ p.name }}'" id="page-{{ p.name }}">
+        <div ng-show="name == '{{ p.name }}'" id="page-{{ p.name }}" ng-controller="page-{{ p.name }}">
             <input type="hidden" name="navbarTitle" value="{{ p.navbarTitle }}" />
             <input type="hidden" name="pageTitle" value="{{ p.pageTitle }}" />
             <input type="hidden" name="pageUrl" value="{{ p.url }}" />
