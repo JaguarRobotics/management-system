@@ -13,12 +13,19 @@ namespace org.usd232.robotics.management.pages {
                 ApiController.instance.setServerUrl(this.$scope.server);
                 ApiController.instance.login.request(new LoginRequest(this.$scope.username, this.$scope.password), res => {
                     if ( res.authentication == "success" ) {
+                        localStorage.setItem("serverUrl", this.$scope.server);
+                        localStorage.setItem("username", this.$scope.username);
                         HistoryController.load("/home");
                     } else {
                         Materialize.toast("Invalid username or password!", 4000);
                     }
                 });
             };
+            this.$scope.server = localStorage.getItem("serverUrl");
+            this.$scope.username = localStorage.getItem("username");
+            if ( this.$scope.server && this.$scope.username ) {
+                setTimeout(() => $(".login-container input[name='pass']").select(), 0);
+            }
         }
     }
 }
