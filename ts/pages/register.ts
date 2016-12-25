@@ -8,7 +8,11 @@ namespace org.usd232.robotics.management.pages {
 
     export class CreateController extends AbstractPage {
         protected init(): void {
-           
+            $(document).ready(function(){
+                $('select').material_select();
+            });
+            this.$scope.back = () => HistoryController.load("/");
+
         }
     }
 }
