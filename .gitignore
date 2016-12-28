@@ -7,3 +7,10 @@
 /node_modules/
 /typings/
 .~*
+/.gradle/
+/build/
+/.classpath
+/.project
+/.settings/
+/bin/
+*.swp
