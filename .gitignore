@@ -14,3 +14,5 @@
 /.settings/
 /bin/
 *.swp
+*.log
+*.log.gz

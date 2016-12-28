@@ -6,6 +6,13 @@ public abstract class Main
 {
     public static void main(String[] args)
     {
-        Spark.get("/hello", (req, res) -> "Hello, world!");
+        try
+        {
+            Spark.port(Integer.parseInt(System.getenv("PORT")));
+        }
+        catch (Exception ex)
+        {
+        }
+        Spark.get("/hello", (req, res)->"Hello, world!");
     }
 }
