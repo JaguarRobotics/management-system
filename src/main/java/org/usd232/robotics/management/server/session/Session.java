@@ -1,6 +1,7 @@
 package org.usd232.robotics.management.server.session;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,6 +26,33 @@ public class Session
      * @since 1.0
      */
     public Set<String> permissions;
+    /**
+     * The last time this object was touched (used to determine when to end a session)
+     * 
+     * @since 1.0
+     */
+    private Date       lastTouch;
+
+    /**
+     * Called after a request reaches the server for this session (used to determine when to end a session)
+     * 
+     * @since 1.0
+     */
+    void touch()
+    {
+        lastTouch = new Date();
+    }
+
+    /**
+     * Gets the amount of time (in milliseconds) to wait before terminating this session
+     * 
+     * @return The amount of time (in milliseconds) to wait before terminating this session
+     * @since 1.0
+     */
+    long timeUntilTermination()
+    {
+        return System.currentTimeMillis() - lastTouch.getTime() - SessionTerminationThread.MAX_INACTIVE_TIME;
+    }
 
     /**
      * Checks if the user of this session has all of the required permissions

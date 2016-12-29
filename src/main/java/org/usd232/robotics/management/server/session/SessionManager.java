@@ -1,5 +1,6 @@
 package org.usd232.robotics.management.server.session;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -18,7 +19,11 @@ public abstract class SessionManager
      * 
      * @since 1.0
      */
-    private static final Map<UUID, Session> SESSIONS = new HashMap<UUID, Session>();
+    static final Map<UUID, Session> SESSIONS = Collections.synchronizedMap(new HashMap<UUID, Session>());
+    static
+    {
+        new SessionTerminationThread().start();
+    }
 
     /**
      * Generates a new session token that is not already tied to an existing session.
@@ -85,9 +90,12 @@ public abstract class SessionManager
      */
     public static Session createSession()
     {
-        UUID uuid = generateToken();
-        Session session = new Session(uuid);
-        SESSIONS.put(uuid, session);
-        return session;
+        synchronized (SESSIONS)
+        {
+            UUID uuid = generateToken();
+            Session session = new Session(uuid);
+            SESSIONS.put(uuid, session);
+            return session;
+        }
     }
 }
