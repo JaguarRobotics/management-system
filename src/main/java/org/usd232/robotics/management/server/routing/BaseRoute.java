@@ -102,7 +102,9 @@ abstract class BaseRoute implements Route
             Session session = SessionManager.getSession(req.headers("X-Session-Token"));
             if (!Session.checkPermissions(permissions, session))
             {
-                throw new IllegalAccessException("The user does not have permission to access this api");
+                LOG.catching(new IllegalAccessException("The user does not have permission to access this api"));
+                res.status(403);
+                return "{\"error\":403}";
             }
             Object result = performRequest(req, session);
             if (result instanceof StartedSessionResponse)
