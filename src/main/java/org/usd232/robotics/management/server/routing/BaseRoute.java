@@ -38,6 +38,12 @@ abstract class BaseRoute implements Route
      */
     protected final Method                method;
     /**
+     * An array of all of the parameter types of the method
+     * 
+     * @since 1.0
+     */
+    protected final Class<?>[]            params;
+    /**
      * The permissions the method requires
      * 
      * @since 1.0
@@ -132,10 +138,12 @@ abstract class BaseRoute implements Route
         if (method == null)
         {
             permissions = null;
+            params = null;
         }
         else
         {
             permissions = method.getAnnotation(RequirePermissions.class);
+            params = method.getParameterTypes();
         }
     }
 }
