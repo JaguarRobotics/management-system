@@ -74,6 +74,10 @@ public abstract class SessionManager
      */
     public static Session getSession(String uuid)
     {
+        if (uuid == null)
+        {
+            return null;
+        }
         try
         {
             return getSession(UUID.fromString(uuid));
