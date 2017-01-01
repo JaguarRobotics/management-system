@@ -3,4 +3,4 @@ login,/,,Login,LoginController
 404,,Page Not Found,HTTP 404,NotFoundController
 register,/register,,Create Account,RegisterController
 profile,/profile,Your Profile,,ProfileController
-kiosk,/kiosk,Kiosk,,KioskController
+kiosk,/kiosk,,Kiosk,KioskController
