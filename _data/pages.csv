@@ -4,3 +4,4 @@ login,/,,Login,LoginController
 register,/register,,Create Account,RegisterController
 profile,/profile,Your Profile,,ProfileController
 kiosk,/kiosk,,Kiosk,KioskController
+home,/home,Home,Home,HomeController
