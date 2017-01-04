@@ -1,2 +1,16 @@
-<h1>Hello, username</h1>
-<h1>abcdefghijklmnopqrstuvwxyz</h1>
+<h1>
+    Hello,
+    <span ng-bind="LoginController.user.profile.name"></span>
+</h1>
+<div ng-repeat="message in messages">
+    <b>
+        <span ng-bind="message.date"></span>
+        <span ng-bind="message.time"></span>
+    </b>
+    <p ng-bind="message.message"></p>
+    <i>
+        From
+        <span ng-bind="message.from"></span>
+    </i>
+    <hr />
+</div>
