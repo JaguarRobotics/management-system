@@ -21,6 +21,9 @@
                 <li ng-show="LoginController.user.permissions.kiosk.open">
                     <a ng-click="go('/kiosk')">Kiosk</a>
                 </li>
+                <li ng-show="LoginController.user.permissions.users.view">
+                    <a ng-click="go('/admin/users')">Users</a>
+                </li>
             </ul>
         </div>
     </div>

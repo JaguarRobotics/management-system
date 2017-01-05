@@ -1,0 +1,20 @@
+<h5 class="center">Manage Users</h5>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Verified</th>
+            <th>Unexcused</th>
+            <th>Late</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="users in users">
+            <td><span ng-bind="user.name"></span></td>
+            <td><span ng-bind="user.verified"></span></td>
+            <td><span ng-bind="user.unexcused"></span></td>
+            <td><span ng-bind="user.late"></span></td>
+        </tr>
+    </tbody>
+</table>
