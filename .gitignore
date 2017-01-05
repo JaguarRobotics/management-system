@@ -17,3 +17,8 @@
 *.log
 *.log.gz
 /app.jar
+/master.zip
+/webcodecamjs-master/
+/js/*
+!/js/keep.js
+/audio/
