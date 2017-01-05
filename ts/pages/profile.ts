@@ -61,6 +61,20 @@ namespace org.usd232.robotics.management.pages {
                     }
                 });
             };
+            this.$scope.uploadImage = () => {
+                let file: File = ($(".profile-upload-image")[0] as HTMLInputElement).files[0];
+                let reader: FileReader = new FileReader();
+                reader.onload = () => {
+                    ApiController.instance.setPicture.request(reader.result, res => {
+                        if ( res.success ) {
+                            this.$scope.$apply(() => LoginController.user.profile.picture = reader.result);
+                        } else {
+                            Materialize.toast("An error occurred while setting picture", 4000);
+                        }
+                    });
+                };
+                reader.readAsDataURL(file);
+            };
         }
     }
 }

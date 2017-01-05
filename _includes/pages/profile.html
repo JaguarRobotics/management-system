@@ -241,7 +241,20 @@
         </div>
     </div>
     <div id="profile-tab-picture" class="col s12">
-
+        <div class="col s12 m6">
+            <img ng-src="{{ "{{ LoginController.user.profile.picture " }}}}" />
+        </div>
+        <div class="col s12 m6">
+            <div class="file-field input-field">
+                <div class="btn waves-effect waves-teal">
+                    <span>Upload</span>
+                    <input type="file" class="profile-upload-image" />
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path hide" type="text" ng-model="uploadPath" ng-change="uploadImage()">
+                </div>
+            </div>
+        </div>
     </div>
     <div id="profile-tab-rsvp" class="col s12">
 
