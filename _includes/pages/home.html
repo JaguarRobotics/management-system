@@ -12,7 +12,7 @@
         <span ng-bind="message.date"></span>
         <span ng-bind="message.time"></span>
     </b>
-    <p ng-bind="message.message"></p>
+    <p ng-bind-html="trust(message.message)"></p>
     <i>
         From
         <span ng-bind="message.from"></span>

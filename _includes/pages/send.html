@@ -1,0 +1,17 @@
+<div class="input-field col s12">
+    <select ng-model="target" ng-init="target = 'team'">
+        <option value="team">Whole Team</option>
+        <option value="subteam">My Subteam</option>
+    </select>
+    <label>
+        Send Message To
+    </label>
+</div>
+<div class="editor" id="send-notification-editor"></div>
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large waves-effect waves-light red" ng-click="send()">
+        <i class="material-icons">
+            send
+        </i>
+    </a>
+</div>

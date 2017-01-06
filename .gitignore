@@ -19,6 +19,10 @@
 /app.jar
 /master.zip
 /webcodecamjs-master/
+/materialNote-master/
 /js/*
 !/js/keep.js
 /audio/
+/css/*
+!/css/main.scss
+/font/

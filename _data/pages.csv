@@ -6,3 +6,4 @@ profile,/profile,Your Profile,,ProfileController
 kiosk,/kiosk,,Kiosk,KioskController
 home,/home,Home,Home,HomeController
 users,/admin/users,Users,Users,UsersController
+send,/send,Send Notification,Send Notification,MessageController

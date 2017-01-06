@@ -26,6 +26,15 @@ cp webcodecamjs-master/audio/beep.mp3 audio/
 cp webcodecamjs-master/js/{qrcodelib,webcodecamjquery,DecoderWorker}.js js/
 rm -rf webcodecamjs-master
 
+wget https://github.com/Cerealkillerway/materialNote/archive/master.zip
+unzip master.zip
+rm master.zip
+cp materialNote-master/{js/{materialNote,ckMaterializeOverrides},lib/codeMirror/{codemirror,xml}}.js js/
+cp materialNote-master/css/{materialNote,codeMirror/{codemirror,monokai}}.css css/
+mkdir -p font
+cp -R materialNote-master/font/* font/
+rm -rf materialNote-master
+
 # Build Jekyll content
 if [ $dev -eq 1 ]; then
     jekyll serve -H 0.0.0.0 | prefixOutput "[Jekyll]     " &
