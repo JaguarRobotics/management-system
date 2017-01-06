@@ -15,8 +15,10 @@ import org.usd232.robotics.management.apis.EventSignup;
 import org.usd232.robotics.management.apis.EventTime;
 import org.usd232.robotics.management.apis.EventType;
 import org.usd232.robotics.management.apis.StatusIdResponse;
+import org.usd232.robotics.management.apis.StatusResponse;
 import org.usd232.robotics.management.server.database.Database;
 import org.usd232.robotics.management.server.routing.GetApi;
+import org.usd232.robotics.management.server.routing.PostApi;
 import org.usd232.robotics.management.server.session.RequirePermissions;
 import org.usd232.robotics.management.server.session.Session;
 
@@ -125,6 +127,107 @@ public class EventApis
                     Database.commitTransaction();
                     return new StatusIdResponse(true, res.getInt(1));
                 }
+            }
+        }
+        catch (SQLException ex)
+        {
+            LOG.catching(ex);
+            Database.rollbackTransaction();
+            throw ex;
+        }
+    }
+
+    /**
+     * Conditionally requires permissions for if objects are different
+     * 
+     * @param session
+     *            The session
+     * @param a
+     *            The first object
+     * @param b
+     *            The second object
+     * @param permission
+     *            The permission name
+     * @since 1.0
+     * @throws IllegalAccessException
+     *             If the user does not have the permission
+     */
+    private static void requirePermission(Session session, Object a, Object b, String permission)
+                    throws IllegalAccessException
+    {
+        if (a == null)
+        {
+            if (b == null)
+            {
+                return;
+            }
+        }
+        else if (a.equals(b))
+        {
+            return;
+        }
+        if (!session.permissions.contains(permission))
+        {
+            throw new IllegalAccessException("User does not have permission to edit this part of the event");
+        }
+    }
+
+    /**
+     * Edits an event
+     * 
+     * @param event
+     *            The changed event
+     * @param session
+     *            The session
+     * @return If it was successful
+     * @since 1.0
+     * @throws SQLException
+     *             If an error occurs while connecting to the database
+     * @throws IllegalAccessException
+     *             If the user does not have the permission
+     */
+    @PostApi("/event/edit")
+    public static StatusResponse edit(Event event, Session session) throws SQLException, IllegalAccessException
+    {
+        Database.startTransaction("events");
+        try
+        {
+            try (PreparedStatement st = Database.prepareStatement(
+                            "SELECT `type`, `name`, `location`, `date`, `start`, `end`, `signup` FROM `events` WHERE `id` = ?"))
+            {
+                st.setInt(1, event.id);
+                try (ResultSet res = st.executeQuery())
+                {
+                    if (!res.next())
+                    {
+                        Database.rollbackTransaction();
+                        return new StatusResponse(false);
+                    }
+                    requirePermission(session, res.getString(1), event.type.name(), "event.edit.type");
+                    requirePermission(session, res.getString(2), event.name, "event.edit.name");
+                    requirePermission(session, res.getString(3), event.location, "event.edit.name");
+                    requirePermission(session, res.getDate(4), event.date, "event.edit.datetime");
+                    requirePermission(session, res.getTime(5), event.time == null ? null : event.time.start,
+                                    "event.edit.datetime");
+                    requirePermission(session, res.getTime(6), event.time == null ? null : event.time.end,
+                                    "event.edit.datetime");
+                    requirePermission(session, res.getDate(7), event.signup == null ? null : event.signup.deadline,
+                                    "event.edit.datetime");
+                }
+            }
+            try (PreparedStatement st = Database.prepareStatement(
+                            "UPDATE `events` SET `type` = ?, `name` = ?, `location` = ?, `date` = ?, `start` = ?, `end` = ?, `signup` = ? WHERE `id` = ?"))
+            {
+                st.setString(1, event.type.name());
+                st.setString(2, event.name);
+                st.setString(3, event.location);
+                st.setDate(4, event.date);
+                st.setTime(5, event.time == null ? null : event.time.start);
+                st.setTime(6, event.time == null ? null : event.time.end);
+                st.setDate(7, event.signup == null ? null : event.signup.deadline);
+                st.execute();
+                Database.commitTransaction();
+                return new StatusResponse(true);
             }
         }
         catch (SQLException ex)
