@@ -183,4 +183,51 @@ public class ProfileApis
             throw ex;
         }
     }
+
+    /**
+     * Requests to change the user's pin number
+     * 
+     * @param newPin
+     *            The new pin number
+     * @param session
+     *            The session
+     * @return If the change was successful
+     * @since 1.0
+     * @throws SQLException
+     *             If an error occurs while connecting to the database
+     */
+    @PostApi("/changePin")
+    public static StatusResponse changePin(int newPin, Session session) throws SQLException
+    {
+        Database.startTransaction("users");
+        try
+        {
+            try (PreparedStatement st = Database.prepareStatement("SELECT `id` FROM `users` WHERE `pin` = ?"))
+            {
+                st.setInt(1, newPin);
+                try (ResultSet res = st.executeQuery())
+                {
+                    if (res.next())
+                    {
+                        Database.rollbackTransaction();
+                        return new StatusResponse(false);
+                    }
+                }
+            }
+            try (PreparedStatement st = Database.prepareStatement("UPDATE `users` SET `pin` = ? WHERE `id` = ?"))
+            {
+                st.setInt(1, newPin);
+                st.setInt(2, session.userId);
+                st.execute();
+                Database.commitTransaction();
+                return new StatusResponse(true);
+            }
+        }
+        catch (SQLException ex)
+        {
+            LOG.catching(ex);
+            Database.rollbackTransaction();
+            throw ex;
+        }
+    }
 }
