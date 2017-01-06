@@ -7,12 +7,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.usd232.robotics.management.apis.Event;
 import org.usd232.robotics.management.apis.EventSignup;
 import org.usd232.robotics.management.apis.EventType;
+import org.usd232.robotics.management.apis.ExcuseRequest;
+import org.usd232.robotics.management.apis.StatusResponse;
 import org.usd232.robotics.management.apis.User;
 import org.usd232.robotics.management.server.database.Database;
 import org.usd232.robotics.management.server.routing.GetApi;
+import org.usd232.robotics.management.server.routing.PostApi;
 import org.usd232.robotics.management.server.session.RequirePermissions;
 
 /**
@@ -24,6 +29,8 @@ import org.usd232.robotics.management.server.session.RequirePermissions;
  */
 public class UserApis
 {
+    private static final Logger LOG = LogManager.getLogger();
+
     /**
      * Gets a list of users who are registered on the server
      * 
@@ -110,6 +117,49 @@ public class UserApis
                 }
                 return events.toArray(new Event[0]);
             }
+        }
+    }
+
+    /**
+     * Marks an absence as excused
+     * 
+     * @param req
+     *            The request
+     * @return If it was successful
+     * @since 1.0
+     * @throws SQLException
+     *             If an error occurs while connecting to the database
+     */
+    @PostApi("/attendance/excuse")
+    @RequirePermissions("attendance.excuse")
+    public static StatusResponse excuse(ExcuseRequest req) throws SQLException
+    {
+        Database.startTransaction("attendance");
+        try
+        {
+            try (PreparedStatement st = Database
+                            .prepareStatement("INSERT IGNORE INTO `attendance` (`userid`, `eventid`) VALUES (?, ?)"))
+            {
+                st.setInt(1, req.user);
+                st.setInt(2, req.event);
+                st.execute();
+            }
+            try (PreparedStatement st = Database.prepareStatement(
+                            "UPDATE `attendance` SET `excused` = ? WHERE `userid` = ? AND `eventid` = ?"))
+            {
+                st.setBoolean(1, req.excused);
+                st.setInt(2, req.user);
+                st.setInt(3, req.event);
+                st.execute();
+                Database.commitTransaction();
+                return new StatusResponse(true);
+            }
+        }
+        catch (SQLException ex)
+        {
+            LOG.catching(ex);
+            Database.rollbackTransaction();
+            throw ex;
         }
     }
 }
