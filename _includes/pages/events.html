@@ -1,0 +1,30 @@
+<table class="highlight">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="event in events" ng-click="view(event)">
+            <td>
+                <span ng-bind="event.name" ng-show="event.type == 'event'"></span>
+                <span ng-show="event.type == 'meeting'">
+                    Meeting
+                </span>
+            </td>
+            <td ng-bind="event.date"></td>
+        </tr>
+    </tbody>
+</table>
+<div class="fixed-action-btn" ng-show="LoginController.user.permissions.events.add">
+    <a class="btn-floating btn-large waves-effect waves-light red" ng-click="add()">
+        <i class="material-icons">
+            add
+        </i>
+    </a>
+</div>
