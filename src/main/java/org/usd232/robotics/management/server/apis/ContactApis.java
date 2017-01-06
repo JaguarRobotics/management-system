@@ -44,7 +44,8 @@ public class ContactApis
             st.setString(2, contact.type.name());
             st.setString(3, contact.type == ContactType.email ? contact.address : contact.number);
             st.setString(4, contact.provider);
-            return new StatusResponse(st.execute());
+            st.execute();
+            return new StatusResponse(true);
         }
     }
 
@@ -91,7 +92,8 @@ public class ContactApis
             st.setInt(2, session.userId);
             st.setString(3, contact.type.name());
             st.setString(4, contact.type == ContactType.email ? contact.address : contact.number);
-            return new StatusResponse(st.execute());
+            st.execute();
+            return new StatusResponse(true);
         }
     }
 
@@ -116,7 +118,8 @@ public class ContactApis
             st.setInt(1, session.userId);
             st.setString(2, contact.type.name());
             st.setString(3, contact.type == ContactType.email ? contact.address : contact.number);
-            return new StatusResponse(st.execute());
+            st.execute();
+            return new StatusResponse(true);
         }
     }
 }
