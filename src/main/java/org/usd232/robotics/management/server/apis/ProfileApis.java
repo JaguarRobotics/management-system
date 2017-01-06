@@ -1,5 +1,6 @@
 package org.usd232.robotics.management.server.apis;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +8,7 @@ import java.sql.Statement;
 import java.util.Base64;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.usd232.robotics.management.apis.RsvpRequest;
 import org.usd232.robotics.management.apis.StatusResponse;
 import org.usd232.robotics.management.server.database.Database;
 import org.usd232.robotics.management.server.routing.BinaryResponse;
@@ -118,6 +120,61 @@ public class ProfileApis
             }
             Database.commitTransaction();
             return new StatusResponse(true);
+        }
+        catch (SQLException ex)
+        {
+            LOG.catching(ex);
+            Database.rollbackTransaction();
+            throw ex;
+        }
+    }
+
+    /**
+     * RSVPs a user
+     * 
+     * @param req
+     *            The request
+     * @param session
+     *            The session
+     * @return If it was successful
+     * @since 1.0
+     * @throws SQLException
+     *             If an error occurs while connecting to the database
+     */
+    @PostApi("/event/rsvp")
+    public static StatusResponse rsvp(RsvpRequest req, Session session) throws SQLException
+    {
+        Database.startTransaction("attendance");
+        try
+        {
+            try (PreparedStatement st = Database
+                            .prepareStatement("INSERT IGNORE INTO `attendance` (`userid`, `eventid`) VALUES (?, ?)"))
+            {
+                st.setInt(1, session.userId);
+                st.setInt(2, req.event);
+                st.execute();
+            }
+            try (PreparedStatement st = Database.prepareStatement(
+                            "UPDATE `attendance` SET `rsvp` = ? WHERE `userid` = ? AND `eventid` = ?"))
+            {
+                if (req.rsvp == null)
+                {
+                    st.setDate(1, null);
+                }
+                else if (req.rsvp)
+                {
+                    st.setDate(1, new Date(System.currentTimeMillis()));
+                }
+                else
+                {
+                    st.setDate(1, new Date(1));
+                }
+                st.setInt(2, session.userId);
+                st.setInt(3, req.event);
+                st.execute();
+                Database.commitTransaction();
+                return new StatusResponse(true);
+            }
         }
         catch (SQLException ex)
         {
