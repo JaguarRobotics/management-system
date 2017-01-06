@@ -5,10 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.usd232.robotics.management.apis.SetSettingRequest;
 import org.usd232.robotics.management.apis.Setting;
 import org.usd232.robotics.management.apis.SettingType;
+import org.usd232.robotics.management.apis.StatusResponse;
 import org.usd232.robotics.management.server.database.Database;
 import org.usd232.robotics.management.server.routing.GetApi;
+import org.usd232.robotics.management.server.routing.PostApi;
 import org.usd232.robotics.management.server.session.RequirePermissions;
 
 /**
@@ -44,6 +47,29 @@ public class SettingsApis
                 }
                 return settings.toArray(new Setting[0]);
             }
+        }
+    }
+
+    /**
+     * Sets a setting
+     * 
+     * @param req
+     *            The setting request
+     * @return If it was successful
+     * @since 1.0
+     * @throws SQLException
+     *             If an error occurs while connecting to the database
+     */
+    @PostApi("/setSetting")
+    @RequirePermissions("settings.edit")
+    public static StatusResponse set(SetSettingRequest req) throws SQLException
+    {
+        try (PreparedStatement st = Database.prepareStatement("UPDATE `settings` SET `value` = ? WHERE `key` = ?"))
+        {
+            st.setString(1, req.value);
+            st.setString(2, req.key);
+            st.execute();
+            return new StatusResponse(true);
         }
     }
 }
