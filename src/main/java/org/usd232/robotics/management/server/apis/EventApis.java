@@ -237,4 +237,42 @@ public class EventApis
             throw ex;
         }
     }
+
+    /**
+     * Deletes an event and all attendance records related to it from the server
+     * 
+     * @param eventId
+     *            The event id
+     * @return If it was successful
+     * @since 1.0
+     * @throws SQLException
+     *             If an error occurs while connecting to the database
+     */
+    @PostApi("/event/remove")
+    @RequirePermissions("event.remove")
+    public static StatusResponse delete(int eventId) throws SQLException
+    {
+        Database.startTransaction("attendance", "events");
+        try
+        {
+            try (PreparedStatement st = Database.prepareStatement("DELETE FROM `attendance` WHERE `eventid` = ?"))
+            {
+                st.setInt(1, eventId);
+                st.execute();
+            }
+            try (PreparedStatement st = Database.prepareStatement("DELETE FROM `events` WHERE `id` = ?"))
+            {
+                st.setInt(1, eventId);
+                st.execute();
+                Database.commitTransaction();
+                return new StatusResponse(true);
+            }
+        }
+        catch (SQLException ex)
+        {
+            LOG.catching(ex);
+            Database.rollbackTransaction();
+            throw ex;
+        }
+    }
 }
