@@ -8,8 +8,11 @@ import java.util.List;
 import org.usd232.robotics.management.apis.Device;
 import org.usd232.robotics.management.apis.DeviceRole;
 import org.usd232.robotics.management.apis.Infrastructure;
+import org.usd232.robotics.management.apis.StatusResponse;
 import org.usd232.robotics.management.server.database.Database;
 import org.usd232.robotics.management.server.routing.GetApi;
+import org.usd232.robotics.management.server.routing.PostApi;
+import org.usd232.robotics.management.server.session.RequirePermissions;
 
 /**
  * Apis relating to devices
@@ -44,5 +47,23 @@ public class DeviceApis
                 return new Infrastructure("1.0", devices);
             }
         }
+    }
+
+    /**
+     * Updates a device
+     * 
+     * @param hostname
+     *            The hostname of the device
+     * @return If it was successful
+     * @since 1.0
+     * @throws SQLException
+     *             If an error occurs while connecting to the database
+     */
+    @PostApi("/update")
+    @RequirePermissions("device.update")
+    public static StatusResponse update(String hostname) throws SQLException
+    {
+        // TODO update
+        return new StatusResponse(false);
     }
 }
