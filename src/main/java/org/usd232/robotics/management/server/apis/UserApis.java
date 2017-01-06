@@ -162,4 +162,25 @@ public class UserApis
             throw ex;
         }
     }
+
+    /**
+     * Verifies a user
+     * 
+     * @param userId
+     *            The user id
+     * @return If it was successful
+     * @since 1.0
+     * @throws SQLException
+     *             If an error occurs while connecting to the database
+     */
+    @PostApi("/verify")
+    @RequirePermissions("user.verify")
+    public static StatusResponse verify(int userId) throws SQLException
+    {
+        try (PreparedStatement st = Database.prepareStatement("UPDATE `users` SET `verified` = 1 WHERE `id` = ?"))
+        {
+            st.setInt(1, userId);
+            return new StatusResponse(st.executeUpdate() == 1);
+        }
+    }
 }
