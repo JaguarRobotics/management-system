@@ -183,4 +183,25 @@ public class UserApis
             return new StatusResponse(st.executeUpdate() == 1);
         }
     }
+
+    /**
+     * Unverifies a user
+     * 
+     * @param userId
+     *            The user id
+     * @return If it was successful
+     * @since 1.0
+     * @throws SQLException
+     *             If an error occurs while connecting to the database
+     */
+    @PostApi("/unverify")
+    @RequirePermissions("user.unverify")
+    public static StatusResponse unverify(int userId) throws SQLException
+    {
+        try (PreparedStatement st = Database.prepareStatement("UPDATE `users` SET `verified` = 0 WHERE `id` = ?"))
+        {
+            st.setInt(1, userId);
+            return new StatusResponse(st.executeUpdate() == 1);
+        }
+    }
 }
