@@ -4,13 +4,17 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.usd232.robotics.management.apis.Event;
 import org.usd232.robotics.management.apis.EventSignup;
 import org.usd232.robotics.management.apis.EventTime;
 import org.usd232.robotics.management.apis.EventType;
+import org.usd232.robotics.management.apis.StatusIdResponse;
 import org.usd232.robotics.management.server.database.Database;
 import org.usd232.robotics.management.server.routing.GetApi;
 import org.usd232.robotics.management.server.session.RequirePermissions;
@@ -25,6 +29,8 @@ import org.usd232.robotics.management.server.session.Session;
  */
 public class EventApis
 {
+    private static final Logger LOG = LogManager.getLogger();
+
     /**
      * Gets a list of events
      * 
@@ -92,6 +98,40 @@ public class EventApis
                                 res.getDate(4), new EventTime(start == null && end == null, start, end),
                                 new EventSignup(deadline != null, deadline, null), null);
             }
+        }
+    }
+
+    /**
+     * Adds a new event to the database
+     * 
+     * @return The id of the new event
+     * @since 1.0
+     * @throws SQLException
+     *             If an error occurs while connecting to the database
+     */
+    @GetApi("/event/add")
+    @RequirePermissions("event.add")
+    public static StatusIdResponse add() throws SQLException
+    {
+        Database.startTransaction("events");
+        try
+        {
+            try (Statement st = Database.createStatement())
+            {
+                st.execute("INSERT INTO `events` () VALUES ()");
+                try (ResultSet res = st.executeQuery("SELECT LAST_INSERT_ID()"))
+                {
+                    res.next();
+                    Database.commitTransaction();
+                    return new StatusIdResponse(true, res.getInt(1));
+                }
+            }
+        }
+        catch (SQLException ex)
+        {
+            LOG.catching(ex);
+            Database.rollbackTransaction();
+            throw ex;
         }
     }
 }
