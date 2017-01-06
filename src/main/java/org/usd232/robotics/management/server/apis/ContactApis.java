@@ -109,7 +109,7 @@ public class ContactApis
      * @throws SQLException
      *             If an error occurs while connecting to the database
      */
-    @PostApi("/contact/delete")
+    @PostApi("/contact/remove")
     public static StatusResponse delete(RemoveContactRequest contact, Session session) throws SQLException
     {
         try (PreparedStatement st = Database

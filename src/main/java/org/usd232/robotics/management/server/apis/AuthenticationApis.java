@@ -219,18 +219,21 @@ public abstract class AuthenticationApis
                 st.execute();
             }
             try (PreparedStatement st = Database.prepareStatement(
-                            "INSERT INTO `contacts` (`userid`, `type`, `value`, `carrier`) VALUES ((SELECT `id` FROM `users` WHERE `username` = ?), ?, ?, ?)"))
+                            "INSERT INTO `contacts` (`userid`, `type`, `value`, `carrier`, `notifications`) VALUES ((SELECT `id` FROM `users` WHERE `username` = ?), ?, ?, ?, ?)"))
             {
                 st.setString(1, req.username);
                 st.setString(2, "email");
                 st.setString(3, req.email);
                 st.setString(4, null);
+                st.setString(5, "team");
                 st.execute();
                 st.setString(3, req.email2);
+                st.setString(5, "team,meeting.missed");
                 st.execute();
                 st.setString(2, "phone");
                 st.setString(3, req.phone);
                 st.setString(4, req.provider);
+                st.setString(5, "team,meeting.missed,meeting.reminders");
                 st.execute();
             }
             Database.commitTransaction();
