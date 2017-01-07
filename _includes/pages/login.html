@@ -1,49 +1,8 @@
-<div class="valign-wrapper login-container">
+<div class="valign-wrapper login-container hide-on-small-only">
     <div class="valign">
-        <div class="row">
-            <div class="col s12">
-                <h1 class="center">
-                    Log In
-                </h1>
-            </div>
-        </div>
-        <form onsubmit="return false" ng-submit="login()">
-            <div class="row">
-                <div class="col s12 input-field">
-                    <input name="server" type="text" ng-model="server" />
-                    <label for="server">Server</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 input-field">
-                    <input name="user" type="text" ng-model="username" />
-                    <label for="user">Username</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 input-field">
-                    <input name="pass" type="password" ng-model="password" />
-                    <label for="pass">Password</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s6">
-                    <button class="waves-effect waves-light btn left">
-                        Log In
-                        <i class="material-icons">
-                            send
-                        </i>
-                    </button>
-                </div>
-                <div class="col s6">
-                    <button type="button" class="waves-effect waves-light btn right" ng-click="create()">
-                        Create Account
-                        <i class="material-icons">
-                            add
-                        </i>
-                    </button>
-                </div>
-            </div>
-        </form>
+        {% include pages/login-content.html %}
     </div>
+</div>
+<div class="hide-on-med-and-up">
+    {% include pages/login-content.html %}
 </div>
