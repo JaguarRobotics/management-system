@@ -1,6 +1,7 @@
 /// <reference path="../page.ts" />
 /// <reference path="../apis.ts" />
 /// <reference path="login.ts" />
+/// <reference path="event.ts" />
 
 namespace org.usd232.robotics.management.pages {
     import ApiController = org.usd232.robotics.management.apis.ApiController;
@@ -12,13 +13,13 @@ namespace org.usd232.robotics.management.pages {
             this.$scope.events = [];
             this.$scope.view = (event: Event) => {
                 if ( LoginController.user.permissions.events.view ) {
-                    // EventController.show(event.id)
+                    EventController.show(event.id)
                 }
             };
             this.$scope.add = () => {
                 ApiController.instance.addEvent.request(res => {
                     if ( res.success ) {
-                        // EventController.show(res.id)
+                        EventController.show(res.id)
                     } else {
                         Materialize.toast("Unable to create event", 4000);
                     }

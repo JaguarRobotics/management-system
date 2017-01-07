@@ -8,3 +8,4 @@ home,/home,Home,Home,HomeController
 users,/admin/users,Users,Users,UsersController
 send,/send,Send Notification,Send Notification,MessageController
 events,/admin/events,Events,Events,EventsController
+event,/admin/event,Edit Event,Edit Event,EventController

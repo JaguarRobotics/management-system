@@ -1,0 +1,43 @@
+<form onsubmit="return false" ng-submit="save()">
+    <div class="row">
+        <div class="input-field col s12">
+            <select ng-model="event.type">
+                <option value="meeting" selected>Meeting</option>
+                <option value="event">Activity</option>
+            </select>
+            <label>Type</label>
+        </div>
+    </div>
+    <div class="row" ng-show="event.type == 'event'">
+        <div class="input-field col s12">
+            <input id="event-name" type="text" ng-model="event.name" />
+            <label for="event-name" class="active">Name</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="event-date" type="date" class="event-datepicker" ng-model="event.date" />
+            <label for="event-date" class="active">Date</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <p>
+                <input type="checkbox" id="event-allday" ng-model="event.time.allDay" />
+                <label for="event-allday">All day</label>
+            </p>
+        </div>
+    </div>
+    <div class="row" ng-hide="event.time.allDay">
+        <div class="input-field col s12">
+            <input id="event-start" type="time" class="c-datepicker-input" ng-model="event.time.start" />
+            <label for="event-start" class="active">Start time</label>
+        </div>
+    </div>
+    <div class="row" ng-hide="event.time.allDay">
+        <div class="input-field col s12">
+            <input id="event-end" type="time" class="c-datepicker-input" ng-model="event.time.end" />
+            <label for="event-end" class="active">End time</label>
+        </div>
+    </div>
+</form>
