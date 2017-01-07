@@ -6,4 +6,5 @@
 {% for p in site.data.pages %}
     "pages/{{ p.name }}",
 {% endfor %}
-    "loading";
+    "loading",
+    "main";
