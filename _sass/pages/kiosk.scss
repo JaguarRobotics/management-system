@@ -2,9 +2,11 @@
     height: 90px;
     font-size: 30px;
 }
-.inputa {
+.kiosk-pin .kiosk-placeholder {
+    opacity: 0;
+}
+.kiosk-pin {
     text-align: center;
-    font-size: 100%;
 }
 .userpicture {
     height: 250px;

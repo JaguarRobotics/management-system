@@ -48,6 +48,7 @@ namespace org.usd232.robotics.management.pages {
                     }
                 });
             };
+            this.$scope.pin = "";
         }
 
         protected open(): void {
