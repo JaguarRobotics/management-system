@@ -2,7 +2,7 @@ name,url,navbarTitle,pageTitle,controllerClass
 login,/,,Login,LoginController
 404,,Page Not Found,HTTP 404,NotFoundController
 register,/register,,Create Account,RegisterController
-profile,/profile,Your Profile,,ProfileController
+profile,/profile,Your Profile,Profile,ProfileController
 kiosk,/kiosk,,Kiosk,KioskController
 home,/home,Home,Home,HomeController
 users,/admin/users,Users,Users,UsersController
