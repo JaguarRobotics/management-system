@@ -38,8 +38,8 @@ rm -rf materialNote-master
 wget https://github.com/ripjar/material-datetime-picker/archive/master.zip
 unzip master.zip
 rm master.zip
-cp material-datetime-picker-master/dist/js/datepicker.standalone.js js/
-cp material-datetime-picker-master/dist/css/datepicker.css css/
+cp material-datetime-picker-master/dist/material-datetime-picker.js js/
+cp material-datetime-picker-master/dist/material-datetime-picker.css css/
 rm -rf material-datetime-picker-master
 
 # Build Jekyll content
