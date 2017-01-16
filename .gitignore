@@ -17,13 +17,13 @@
 *.log
 *.log.gz
 /app.jar
-/master.zip
 /webcodecamjs-master/
 /materialNote-master/
-/material-datetime-picker-master/
+/material-datetime-picker-1.0.1/
 /js/*
 !/js/keep.js
 /audio/
 /css/*
 !/css/main.scss
 /font/
+*.zip

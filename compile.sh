@@ -35,12 +35,12 @@ mkdir -p font
 cp -R materialNote-master/font/* font/
 rm -rf materialNote-master
 
-wget https://github.com/ripjar/material-datetime-picker/archive/master.zip
-unzip master.zip
-rm master.zip
-cp material-datetime-picker-master/dist/material-datetime-picker.js js/
-cp material-datetime-picker-master/dist/material-datetime-picker.css css/
-rm -rf material-datetime-picker-master
+wget https://github.com/ripjar/material-datetime-picker/archive/1.0.1.zip
+unzip 1.0.1.zip
+rm 1.0.1.zip
+cp material-datetime-picker-1.0.1/dist/js/datepicker.standalone.js js/
+cp material-datetime-picker-1.0.1/dist/css/datepicker.css css/
+rm -rf material-datetime-picker-1.0.1
 
 # Build Jekyll content
 if [ $dev -eq 1 ]; then
