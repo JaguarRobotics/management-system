@@ -10,3 +10,5 @@ send,/send,Send Notification,Send Notification,MessageController
 events,/admin/events,Events,Events,EventsController
 event,/admin/event,Edit Event,Edit Event,EventController
 attendance,/admin/attendance,Event Attendance,Event Attendance,AttendanceController
+forgot,/forgot,,Forgot Password,ForgotController
+reset,/reset,,Reset Password,ResetController

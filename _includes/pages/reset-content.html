@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col s12">
+        <h1 class="center">
+            Reset Password
+        </h1>
+    </div>
+</div>
+<form onsubmit="return false" ng-submit="reset()">
+    <div class="row">
+        <div class="col s12 input-field">
+            <input name="password" type="password" ng-model="password" />
+            <label for="password">Password</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 input-field">
+            <input name="passconf" type="password" ng-model="passconf" />
+            <label for="passconf">Confirm Password</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <button class="waves-effect waves-light btn">
+                Reset Password
+            </button>
+        </div>
+    </div>
+</form>
